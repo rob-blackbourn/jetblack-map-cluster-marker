@@ -7,11 +7,10 @@ import {
   Point,
   calcScaleInfo,
   recenterScreenPoint,
-  createPoints,
+  createVisiblePoints,
+  limitCoordinate,
 } from '@jetblack/map'
 import { ClusterManager, CoordinateBounds, Node } from '@jetblack/cluster-manager'
-
-import { limitCoordinate } from './utils'
 
 const classNames = { clusterMarker: [CLASS_NAMES.primary, 'cluster-marker'].join(' ') }
 
@@ -50,8 +49,8 @@ export default function ClusterMarker<T>({
     }
 
     const bounds: CoordinateBounds = {
-      northWest: limitCoordinate(worldBounds.topLeft),
-      southEast: limitCoordinate(worldBounds.bottomRight),
+      northWest: limitCoordinate(worldBounds.northWest),
+      southEast: limitCoordinate(worldBounds.southEast),
     }
 
     setClusters(clusterManager.getCluster(bounds, zoom))
@@ -63,7 +62,7 @@ export default function ClusterMarker<T>({
     const markerPoint = recenterScreenPoint(coordinate, center, zoom, bounds, tileSize)
 
     // If the screen is zoomed out the coordinate may appear many times as the display will wrap horizontally.
-    return createPoints(markerPoint, roundedZoom, scale, bounds.width, tileSize.width)
+    return createVisiblePoints(markerPoint, roundedZoom, scale, bounds.width, tileSize.width)
   }
 
   return (
