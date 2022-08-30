@@ -4,7 +4,7 @@ A cluster marker for @jetblack/map.
 
 ## Installation
 
-Install from npjms.
+Install from npmjs.
 
 ```bash
 npm install --save @jetblack/cluster-marker
