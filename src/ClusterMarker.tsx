@@ -16,8 +16,8 @@ const classNames = { clusterMarker: [CLASS_NAMES.primary, 'cluster-marker'].join
 
 export interface ClusterMarkerProps<T> {
   features: T[]
-  renderPoint: (point: Point, data: Node<T>) => React.ReactElement
-  renderCluster: (point: Point, data: Node<T>) => React.ReactElement
+  renderPoint: (point: Point, node: Node<T>) => React.ReactElement
+  renderCluster: (point: Point, node: Node<T>) => React.ReactElement
   getCoordinates: (point: T) => Coordinate
   makePoint: (coordinate: Coordinate, nodes: Node<T>[]) => T
 }

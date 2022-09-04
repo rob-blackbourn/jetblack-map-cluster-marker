@@ -74,7 +74,10 @@ export const sum = (a: number[]) => a.reduce((total, value) => total + value, 0)
 const getCoordinates = (point: NamedPlace) => point.coordinate
 
 const makePoint = (coordinate: Coordinate, nodes: Node<NamedPlace>[]): NamedPlace => ({
-  name: `Cluster containing: ${nodes.flatMap(n => n.leaves()).join(', ')}`,
+  name: nodes
+    .flatMap(n => n.leaves())
+    .map(n => n.data.name)
+    .join(', '),
   coordinate,
 })
 
@@ -154,7 +157,27 @@ export default function SimpleExample() {
                 )}
               />
             )}
-            renderCluster={(point, data) => <ClusterPin count={data.count()} />}
+            renderCluster={(point, node) => (
+              <ClusterPin
+                point={point}
+                count={node.count()}
+                renderPopup={point => (
+                  <Popup
+                    style={{
+                      backgroundColor: 'black',
+                      color: 'white',
+                      padding: 2,
+                      borderRadius: 5,
+                      fontSize: '75%',
+                      width: 200,
+                    }}
+                    point={point}
+                  >
+                    <span>{node.data.name}</span>
+                  </Popup>
+                )}
+              />
+            )}
             getCoordinates={getCoordinates}
             makePoint={makePoint}
           />
