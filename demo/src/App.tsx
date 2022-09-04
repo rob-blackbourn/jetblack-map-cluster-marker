@@ -20,7 +20,7 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<SimpleExample />}></Route>
-          <Route path="/controlled" element={<GeoJsonExample />} />
+          <Route path="/geojson" element={<GeoJsonExample />} />
         </Routes>
       </Router>
     </div>

@@ -104,43 +104,54 @@ export default function SimpleExample() {
   })
 
   return (
-    <Map
-      ref={ref} // Bind the ref to the map component.
-      center={center} // The useDrag hook updates the center property.
-      zoom={zoom} // The useZoom hook updates the zoom property.
-      width="1000px"
-      height="600px"
-    >
-      <OverlayLayer>
-        <ClusterMarker
-          features={places}
-          renderPoint={(point, node) => (
-            <Pin
-              point={point}
-              color="blue"
-              renderPopup={(point, size) => (
-                <Popup
-                  style={{
-                    backgroundColor: 'black',
-                    color: 'white',
-                    padding: 2,
-                    borderRadius: 5,
-                    fontSize: '75%',
-                  }}
-                  point={point}
-                  leftShift={-size.width}
-                  upShift={-size.height * 2}
-                >
-                  <span>{node.data.name}</span>
-                </Popup>
-              )}
-            />
-          )}
-          renderCluster={(point, data) => <ClusterPin count={data.count()} />}
-          getCoordinates={getCoordinates}
-          makePoint={makePoint}
-        />
-      </OverlayLayer>
-    </Map>
+    <div>
+      <div>
+        <h2>A simple example</h2>
+
+        <p>
+          Like the <code>Marker</code>, the <code>ClusterMarker</code> is a child of the{' '}
+          <code>OverlayLayer</code>.
+        </p>
+      </div>
+
+      <Map
+        ref={ref} // Bind the ref to the map component.
+        center={center} // The useDrag hook updates the center property.
+        zoom={zoom} // The useZoom hook updates the zoom property.
+        width={800}
+        height={600}
+      >
+        <OverlayLayer>
+          <ClusterMarker
+            features={places}
+            renderPoint={(point, node) => (
+              <Pin
+                point={point}
+                color="blue"
+                renderPopup={(point, size) => (
+                  <Popup
+                    style={{
+                      backgroundColor: 'black',
+                      color: 'white',
+                      padding: 2,
+                      borderRadius: 5,
+                      fontSize: '75%',
+                    }}
+                    point={point}
+                    leftShift={-size.width}
+                    upShift={-size.height * 2}
+                  >
+                    <span>{node.data.name}</span>
+                  </Popup>
+                )}
+              />
+            )}
+            renderCluster={(point, data) => <ClusterPin count={data.count()} />}
+            getCoordinates={getCoordinates}
+            makePoint={makePoint}
+          />
+        </OverlayLayer>
+      </Map>
+    </div>
   )
 }

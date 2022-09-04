@@ -9,7 +9,7 @@ import {
   useDrag,
   useZoom,
   OverlayLayer,
-  SVGPin,
+  Pin,
 } from '@jetblack/map'
 
 import { Node } from '@jetblack/cluster-manager'
@@ -68,24 +68,35 @@ export default function GeoJsonExample() {
   })
 
   return (
-    <Map
-      ref={ref} // Bind the ref to the map component.
-      center={center} // The useDrag hook updates the center property.
-      zoom={zoom} // The useZoom hook updates the zoom property.
-      width="1000px"
-      height="600px"
-    >
-      <OverlayLayer>
-        <ClusterMarker
-          features={places.features as Feature<GeoPoint>[]}
-          renderPoint={(point: Point) => <SVGPin point={point} color="blue" />}
-          renderCluster={(point: Point, data: Node<Feature<GeoPoint>>) => (
-            <ClusterPin count={data.count()} />
-          )}
-          getCoordinates={getCoordinates}
-          makePoint={makePoint}
-        />
-      </OverlayLayer>
-    </Map>
+    <div>
+      <div>
+        <h2>An example using GeoJSON data</h2>
+
+        <p>
+          The <code>getCoordinates</code> and <code>makePoint</code>
+          handle the GeoJSON point features.
+        </p>
+      </div>
+
+      <Map
+        ref={ref} // Bind the ref to the map component.
+        center={center} // The useDrag hook updates the center property.
+        zoom={zoom} // The useZoom hook updates the zoom property.
+        width={800}
+        height={600}
+      >
+        <OverlayLayer>
+          <ClusterMarker
+            features={places.features as Feature<GeoPoint>[]}
+            renderPoint={(point: Point) => <Pin point={point} color="blue" />}
+            renderCluster={(point: Point, data: Node<Feature<GeoPoint>>) => (
+              <ClusterPin count={data.count()} />
+            )}
+            getCoordinates={getCoordinates}
+            makePoint={makePoint}
+          />
+        </OverlayLayer>
+      </Map>
+    </div>
   )
 }
