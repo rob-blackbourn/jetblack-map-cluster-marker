@@ -98,7 +98,7 @@ export default function GeoJsonExample() {
             features={places.features as Feature<GeoPoint>[]}
             renderPoint={(point: Point) => <Pin point={point} color="blue" />}
             renderCluster={(point: Point, data: Node<Feature<GeoPoint>>) => (
-              <ClusterPin count={data.count()} />
+              <ClusterPin point={point} count={data.count()} />
             )}
             getCoordinates={getCoordinates}
             makePoint={makePoint}
