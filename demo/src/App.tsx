@@ -78,7 +78,7 @@ export default function App() {
       <OverlayLayer>
         <ClusterMarker
           features={places.features as Feature<GeoPoint>[]}
-          renderPoint={(point: Point) => <SVGPin point={point} color="red" />}
+          renderPoint={(point: Point) => <SVGPin point={point} color="blue" />}
           renderCluster={(point: Point, data: Node<Feature<GeoPoint>>) => (
             <ClusterPin count={data.count()} />
           )}
