@@ -9,7 +9,7 @@ export default function App() {
     <div style={{ marginTop: 50 }}>
       <Router>
         <div>
-          <h1>@jetblack/map demos</h1>
+          <h1>@jetblack/map-cluster-marker demos</h1>
 
           <nav>
             <Link to="/">Simple</Link>

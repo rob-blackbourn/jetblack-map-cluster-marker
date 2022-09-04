@@ -76,6 +76,14 @@ export default function GeoJsonExample() {
           The <code>getCoordinates</code> and <code>makePoint</code>
           handle the GeoJSON point features.
         </p>
+
+        <p>
+          You can view the source code{' '}
+          <a href="https://github.com/rob-blackbourn/jetblack-map-cluster-marker/blob/master/demo/src/pages/GeoJsonExample.tsx">
+            here
+          </a>
+          .
+        </p>
       </div>
 
       <Map
