@@ -1,6 +1,6 @@
 {
   "name": "@jetblack/map-cluster-marker",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "A cluster marker for @jetblack/map",
   "repository": "https://github.com/rob-blackbourn/jetblack-map-cluster-marker",
   "homepage": "https://rob-blackbourn.github.io/jetblack-map-cluster-marker/",
