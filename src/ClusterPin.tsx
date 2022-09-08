@@ -85,8 +85,6 @@ export default function ClusterPin<T>({
     onHover && onHover(false, point, { width, height }, node)
   }, [])
 
-  console.log({ mouseOver, point, size })
-
   return (
     <div>
       <div
