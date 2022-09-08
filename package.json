@@ -1,6 +1,6 @@
 {
   "name": "@jetblack/map-cluster-marker",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A cluster marker for @jetblack/map",
   "repository": "https://github.com/rob-blackbourn/jetblack-map-cluster-marker",
   "homepage": "https://rob-blackbourn.github.io/jetblack-map-cluster-marker/",
@@ -22,8 +22,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@jetblack/cluster-manager": "1.0.1",
-    "@jetblack/map": "^2.0.0"
+    "@jetblack/cluster-manager": "2.0.0",
+    "@jetblack/map": "^2.0.1"
   },
   "peerDependencies": {
     "react": "^18.1.0",
