@@ -3,31 +3,36 @@ import React, { useCallback, useState } from 'react'
 import { Point, Size } from '@jetblack/map'
 import { Node } from '@jetblack/cluster-manager'
 
-const colors = {
-  small: ['rgba(181, 226, 140, 0.6)', 'rgba(110, 204, 57, 0.7)'],
-  medium: ['rgba(241, 211, 87, 0.6)', 'rgba(240, 194, 12, 0.7)'],
-  big: ['rgba(253, 156, 115, 0.6)', 'rgba(241, 128, 23, 0.7)'],
-}
-const defaultCountToColor = (count: number): string[] => {
-  return count > 20 ? colors.big : count > 7 ? colors.medium : colors.small
+export interface ClusterPinColor {
+  borderColor: string
+  background: string
 }
 
-const styleFromCount = (count: number, size: number): React.CSSProperties => {
-  const colors = defaultCountToColor(count)
+const defaultColors = {
+  small: {
+    borderColor: 'rgba(181, 226, 140, 0.6)',
+    background: 'rgba(110, 204, 57, 0.7)',
+  },
+  medium: {
+    borderColor: 'rgba(241, 211, 87, 0.6)',
+    background: 'rgba(240, 194, 12, 0.7)',
+  },
+  big: {
+    borderColor: 'rgba(253, 156, 115, 0.6)',
+    background: 'rgba(241, 128, 23, 0.7)',
+  },
+}
+
+const defaultCountToColor = (count: number): ClusterPinColor => {
+  return count > 20 ? defaultColors.big : count > 7 ? defaultColors.medium : defaultColors.small
+}
+
+const defaultMarkerStyle = (count: number, mouseOver: boolean): React.CSSProperties => {
+  const { borderColor, background } = defaultCountToColor(count)
   return {
-    width: size,
-    height: size,
-    borderRadius: '50%',
-    borderWidth: 3,
-    borderColor: colors[0],
-    borderStyle: 'solid',
-    background: colors[1],
-    position: 'absolute',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    textAlign: 'center',
-    cursor: 'default',
+    borderColor: borderColor,
+    background: background,
+    filter: mouseOver ? 'drop-shadow(0 0 4px rgba(0, 0, 0, .3))' : '',
   }
 }
 
@@ -58,6 +63,8 @@ export interface ClusterPinProps<T> {
     size: Size,
     node?: Node<T>
   ) => void
+  /** A callback for generating custom styles for a marker */
+  markerStyle?: (count: number, mouseOver: boolean) => React.CSSProperties
 }
 
 export default function ClusterPin<T>({
@@ -69,6 +76,7 @@ export default function ClusterPin<T>({
   onHover,
   onClick,
   onContextMenu,
+  markerStyle = defaultMarkerStyle,
 }: ClusterPinProps<T>) {
   const [mouseOver, setMouseOver] = useState(false)
 
@@ -89,10 +97,20 @@ export default function ClusterPin<T>({
     <div>
       <div
         style={{
-          ...styleFromCount(count, size),
+          ...markerStyle(count, mouseOver),
           transform: `translate(-${size / 2}px, -${size / 2}px)`,
-          filter: mouseOver ? 'drop-shadow(0 0 4px rgba(0, 0, 0, .3))' : '',
           pointerEvents: 'auto',
+          position: 'absolute',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          textAlign: 'center',
+          cursor: 'default',
+          width: size,
+          height: size,
+          borderRadius: '50%',
+          borderWidth: 3,
+          borderStyle: 'solid',
         }}
         onClick={event => onClick && onClick(event, point, { width, height }, node)}
         onContextMenu={event =>

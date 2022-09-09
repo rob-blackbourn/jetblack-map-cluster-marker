@@ -4,6 +4,7 @@ import {
   Coordinate,
   Map,
   Point,
+  Popup,
   osmTileProvider,
   useClick,
   useDrag,
@@ -38,7 +39,10 @@ const makePoint = (
   },
   properties: {
     type: 'cluster',
-    count: sum(nodes.map(node => node.count())),
+    name: nodes
+      .flatMap(n => n.leaves())
+      .map(n => n.data.properties?.name)
+      .join(', '),
   },
 })
 
@@ -96,9 +100,48 @@ export default function GeoJsonExample() {
         <OverlayLayer>
           <ClusterMarker
             features={places.features as Feature<GeoPoint>[]}
-            renderPoint={(point: Point) => <Pin point={point} color="blue" />}
-            renderCluster={(point: Point, data: Node<Feature<GeoPoint>>) => (
-              <ClusterPin point={point} count={data.count()} />
+            renderPoint={(point, node) => (
+              <Pin
+                point={point}
+                color="blue"
+                renderPopup={(point, size) => (
+                  <Popup
+                    style={{
+                      backgroundColor: 'black',
+                      color: 'white',
+                      padding: 2,
+                      borderRadius: 5,
+                      fontSize: '75%',
+                    }}
+                    point={point}
+                    leftShift={-size.width}
+                    upShift={-size.height * 2}
+                  >
+                    <span>{node.data.properties?.name}</span>
+                  </Popup>
+                )}
+              />
+            )}
+            renderCluster={(point, node) => (
+              <ClusterPin
+                point={point}
+                count={node.count()}
+                renderPopup={point => (
+                  <Popup
+                    style={{
+                      backgroundColor: 'black',
+                      color: 'white',
+                      padding: 2,
+                      borderRadius: 5,
+                      fontSize: '75%',
+                      width: 200,
+                    }}
+                    point={point}
+                  >
+                    <span>{node.data.properties?.name}</span>
+                  </Popup>
+                )}
+              />
             )}
             getCoordinates={getCoordinates}
             makePoint={makePoint}
